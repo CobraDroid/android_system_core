@@ -50,7 +50,7 @@ static int (*write_to_log)(log_id_t, struct iovec *vec, size_t nr) = __write_to_
 static pthread_mutex_t log_init_lock = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
-static int log_fds[(int)LOG_ID_MAX] = { -1, -1, -1, -1 };
+static int log_fds[(int)LOG_ID_MAX] = { -1, -1, -1, -1, -1 };
 
 /*
  * This is used by the C++ code to decide if it should write logs through
@@ -106,17 +106,20 @@ static int __write_to_log_init(log_id_t log_id, struct iovec *vec, size_t nr)
         log_fds[LOG_ID_RADIO] = log_open("/dev/"LOGGER_LOG_RADIO, O_WRONLY);
         log_fds[LOG_ID_EVENTS] = log_open("/dev/"LOGGER_LOG_EVENTS, O_WRONLY);
         log_fds[LOG_ID_SYSTEM] = log_open("/dev/"LOGGER_LOG_SYSTEM, O_WRONLY);
+        log_fds[LOG_ID_SECURITY] = log_open("/dev/"LOGGER_LOG_SECURITY, O_WRONLY);
 
         write_to_log = __write_to_log_kernel;
 
         if (log_fds[LOG_ID_MAIN] < 0 || log_fds[LOG_ID_RADIO] < 0 ||
-                log_fds[LOG_ID_EVENTS] < 0) {
+                log_fds[LOG_ID_EVENTS] < 0 || log_fds[LOG_ID_SECURITY] < 0) {
             log_close(log_fds[LOG_ID_MAIN]);
             log_close(log_fds[LOG_ID_RADIO]);
             log_close(log_fds[LOG_ID_EVENTS]);
+            log_close(log_fds[LOG_ID_SECURITY]);
             log_fds[LOG_ID_MAIN] = -1;
             log_fds[LOG_ID_RADIO] = -1;
             log_fds[LOG_ID_EVENTS] = -1;
+            log_fds[LOG_ID_SECURITY] = -1;
             write_to_log = __write_to_log_null;
         }
 

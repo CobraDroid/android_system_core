@@ -545,6 +545,7 @@ typedef enum {
     LOG_ID_RADIO = 1,
     LOG_ID_EVENTS = 2,
     LOG_ID_SYSTEM = 3,
+    LOG_ID_SECURITY =4,
 
     LOG_ID_MAX
 } log_id_t;

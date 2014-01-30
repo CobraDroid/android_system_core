@@ -47,6 +47,7 @@ struct logger_entry_v2 {
 #define LOGGER_LOG_RADIO	"log/radio"
 #define LOGGER_LOG_EVENTS	"log/events"
 #define LOGGER_LOG_SYSTEM	"log/system"
+#define LOGGER_LOG_SECURITY	"log/security"
 
 /*
  * The maximum size of the log entry payload that can be
