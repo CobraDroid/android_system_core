@@ -7,6 +7,7 @@
 import /init.usb.rc
 import /init.${ro.hardware}.rc
 import /init.trace.rc
+import /init.superuser.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -175,6 +176,10 @@ on post-fs
 
     # create the lost+found directories, so as to enforce our permissions
     mkdir /cache/lost+found 0770 root root
+
+    # Set up the LiME driver
+    chmod 0660 /dev/lime
+    chown root lime /dev/lime
 
 on post-fs-data
     # We chown/chmod /data again so because mount is run as root + defaults
